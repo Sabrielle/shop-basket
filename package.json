@@ -1,19 +1,17 @@
 {
   "name": "shop-basket",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"PORT=3001 node ./bin/www\" \"cd client && npm start\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Sabrielle/shop-basket.git"
-  },
-  "author": "Anna",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Sabrielle/shop-basket/issues"
-  },
-  "homepage": "https://github.com/Sabrielle/shop-basket#readme"
+  "dependencies": {
+    "concurrently": "^5.0.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "pug": "^2.0.4"
+  }
 }
