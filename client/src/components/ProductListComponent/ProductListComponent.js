@@ -8,7 +8,9 @@ class ProductListComponent extends Component {
         super(props);
 
         this.state = {
-            productList: []
+            productList: [],
+            sumList: {},
+            isCalculated: false
         };
     }
 
@@ -24,8 +26,20 @@ class ProductListComponent extends Component {
     }
 
     addProduct = (data) => {
-        //this.setState(state => (state.taskList[index].status = newStatus, state));
+        this.setState({ isCalculated: false});
         this.setState(state => (state.productList = [...state.productList, data], state));
+    }
+
+    calculate = () => {
+        axios.get('/calculate',).then(res => {
+            if (res.status === 200) {
+                this.setState({ sumList: res.data});
+                this.setState({ isCalculated: true});
+            }
+            else {
+                alert('При подсчёте произошла ошибка!');
+            }
+        });
     }
 
     componentDidMount() {
@@ -35,32 +49,57 @@ class ProductListComponent extends Component {
     render() {
         return (
             <React.Fragment>
-                <AddProduct currencies={this.props.currencies} addProduct={this.addProduct}/>
+                <AddProduct currencies={ this.props.currencies } addProduct={ this.addProduct }/>
                 { 
                     this.state.productList.length ?
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>Название</th>
-                                    <th>Количество</th>
-                                    <th>Валюта</th>
-                                    <th>Цена</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    this.state.productList.map((item, index) =>
-                                        <tr key={ index }>
-                                            <td>{ item.name }</td>
-                                            <td>{ item.quantity }</td>
-                                            <td>{ item.currency }</td>
-                                            <td>{ item.price }</td>
-                                        </tr>
-                                    )
-                                }
-                            </tbody>
-                        </table>
-                    : <h3>Данные ещё не загружены</h3>
+                        <React.Fragment>
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>Название</th>
+                                        <th>Количество</th>
+                                        <th>Валюта</th>
+                                        <th>Цена</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        this.state.productList.map((item, index) =>
+                                            <tr key={ index }>
+                                                <td>{ item.name }</td>
+                                                <td>{ item.quantity }</td>
+                                                <td>{ item.currency }</td>
+                                                <td>{ item.price }</td>
+                                            </tr>
+                                        )
+                                    }
+                                </tbody>
+                            </table>
+                            <div className="row">
+                                <div className="col-md-10">
+                                    {
+                                        this.state.isCalculated ? 
+                                            <div className="pl-3">
+                                                <h5>Сумма:</h5>
+                                                {   
+                                                    Object.entries(this.state.sumList).map((item, index) =>
+                                                        <h6 key={ index }>
+                                                            { item[0] }: { item[1] }
+                                                        </h6>
+                                                    )
+                                                }
+                                            </div>
+                                        : ''
+                                    }
+                                </div>
+                                <div className="col-md-2">
+                                    <div className="d-flex justify-content-end">
+                                        <button onClick={ this.calculate } className="btn btn-primary">Подсчитать</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    : <h3>Нет данных</h3>
                 }
             </React.Fragment>
         );
