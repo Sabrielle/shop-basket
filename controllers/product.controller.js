@@ -15,29 +15,29 @@ function convert (rates, price, from, to) {
 
 module.exports = {
 
-	getAll: async (req, res) => {
-		try {
-			let products = await Product.find();
-			res.json(products);
-		} catch (error) {
-			res.status(400).json(error);
-		}
-	},
+    getAll: async (req, res) => {
+        try {
+            let products = await Product.find();
+            res.json(products);
+        } catch (error) {
+            res.status(400).json(error);
+        }
+    },
 
-	create: async (req, res) => {
-		const product = new Product({
-			name: req.body.name,
-			quantity: req.body.quantity,
-			currency: req.body.currency,
-			price: req.body.price
-		});
+    create: async (req, res) => {
+        const product = new Product({
+            name: req.body.name,
+            quantity: req.body.quantity,
+            currency: req.body.currency,
+            price: req.body.price
+        });
 
-		try {
-			let response = await product.save(product);
-			res.json(response);
-		} catch (error) {
-			res.status(400).json(error);
-		}
+        try {
+            let response = await product.save(product);
+            res.json(response);
+        } catch (error) {
+            res.status(400).json(error);
+        }
     },
 
     calculate: async (req, res) => {

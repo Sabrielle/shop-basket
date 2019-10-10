@@ -16,12 +16,9 @@ class ProductListComponent extends Component {
 
     getProductList() {
         axios.get('/products',).then(res => {
-            if (res.status === 200) {
-                this.setState({ productList: res.data});
-            }
-            else {
-                alert('При загрузке списка произошла ошибка!');
-            }
+            this.setState({ productList: res.data});
+        }).catch(function (error) {
+            alert('При загрузке списка произошла ошибка!');
         });
     }
 
@@ -32,13 +29,10 @@ class ProductListComponent extends Component {
 
     calculate = () => {
         axios.get('/calculate',).then(res => {
-            if (res.status === 200) {
-                this.setState({ sumList: res.data});
-                this.setState({ isCalculated: true});
-            }
-            else {
-                alert('При подсчёте произошла ошибка!');
-            }
+            this.setState({ sumList: res.data});
+            this.setState({ isCalculated: true});
+        }).catch(function (error) {
+            alert('При подсчёте произошла ошибка!');
         });
     }
 

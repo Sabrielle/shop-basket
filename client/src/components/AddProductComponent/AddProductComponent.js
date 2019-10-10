@@ -27,16 +27,18 @@ class AddProductComponent extends Component {
             currency: this.state.currency,
             price: this.state.price
         };
-        axios.post('/add', data)
-            .then(res => {
-                if (res.status === 200) {
+        if(data.price > 0 && data.quantity > 0) {
+            axios.post('/add', data)
+                .then(res => {
                     alert('Успешно добавлено!');
-                    this.props.addProduct(data);
-                }
-                else {
-                    alert(JSON.stringify(res.data.message));
-                }
-            });
+                    this.props.addProduct(data);   
+                }).catch(function (error) {
+                    alert('При добавлении произошла ошибка!');
+                });
+            }
+            else {
+                alert('Все числовые значения должны быть больше нуля');
+            }
     }
 
     render() {

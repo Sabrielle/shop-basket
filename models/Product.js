@@ -1,24 +1,24 @@
 const mongoose = require('../lib/connect'),
-	Schema = mongoose.Schema;
+Schema = mongoose.Schema;
 
 
 const ProductSchema = new Schema({
-	name: {
-		type: String,
-		required: [true]
-	},
-	quantity: {
+    name: {
+        type: String,
+        required: [true]
+    },
+    quantity: {
         type: Number,
         required: true
     },
-	currency: {
+    currency: {
         type: String,
         required: true
     },
-	price: {
+    price: {
         type: Number,
         required: true
-    },
+    }
 });
 
 
